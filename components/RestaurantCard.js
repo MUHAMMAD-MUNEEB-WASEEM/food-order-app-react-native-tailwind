@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import { StarIcon } from 'react-native-heroicons/solid'
 import { LocationMarkerIcon } from 'react-native-heroicons/outline'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import tw from 'twrnc'
 import { urlFor } from '../sanity'
 
@@ -16,9 +16,11 @@ const RestaurantCard = ({
     short_description,
     dishes,
     long,
-    lat,}) => {
+    lat,
+  }) => {
         
         const navigation = useNavigation();
+  
         
         return (
           <TouchableOpacity
