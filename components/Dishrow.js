@@ -4,9 +4,23 @@ import Currency from "react-currency-formatter";
 import { urlFor } from "../sanity";
 import { MinusCircleIcon, PlusCircleIcon } from "react-native-heroicons/solid";
 import tw from 'twrnc'
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, removeFromCart, selectCartItemsWithId } from "../features/cartSlice";
 
 export const Dishrow = ({ id, name, description, price, image }) => {
   const [isPressed, setIsPressed] = useState(false);
+
+  const items = useSelector(state => selectCartItemsWithId(state, id))
+  const dispatch = useDispatch()
+
+  const addItemToCart = () => {
+    dispatch(addToCart({ id, name, description, price, image }))
+  }
+
+  const removeItemsFromCart = () => {
+    if (!items.length > 0) return
+    dispatch(removeFromCart({ id }))
+  }
 
   return (
     <>
@@ -37,11 +51,11 @@ export const Dishrow = ({ id, name, description, price, image }) => {
       {isPressed && (
         <View style={tw`bg-white px-4`}>
           <View style={tw`flex-row items-center space-x-2 pb-3`}>
-            <TouchableOpacity>
-              <MinusCircleIcon color="#00CCBB" size={40} />
+            <TouchableOpacity disabled={!items.length} onPress={removeItemsFromCart}>
+              <MinusCircleIcon color="#00CCBB" size={40} color={items.length > 0 ? "#00CCBB" : "gray"}/>
             </TouchableOpacity>
-            <Text>0</Text>
-            <TouchableOpacity>
+            <Text>{items.length}</Text>
+            <TouchableOpacity onPress={addItemToCart}>
               <PlusCircleIcon color="#00CCBB" size={40} />
             </TouchableOpacity>
           </View>
