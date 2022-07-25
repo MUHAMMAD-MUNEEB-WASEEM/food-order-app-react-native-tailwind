@@ -11,8 +11,17 @@ import {
 import { Dishrow } from "../components/Dishrow";
 import { urlFor } from "../sanity";
 import tw from 'twrnc'
+import BasketIcon from "../components/BasketIcon";
+import { setRestaurant } from "../features/restaurantSlice";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 const RestaurantScreen = () => {
+
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+
   const {
     params: {
       id,
@@ -27,7 +36,24 @@ const RestaurantScreen = () => {
       lat,
     },
   } = useRoute();
-  const navigation = useNavigation();
+
+  useEffect(() => {
+    dispatch(
+      setRestaurant({
+        id,
+        imgUrl,
+        title,
+        rating,
+        genre,
+        address,
+        short_description,
+        dishes,
+        long,
+        lat,
+      })
+    );
+  }, []);
+
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -37,6 +63,9 @@ const RestaurantScreen = () => {
 
   return (
     <>
+
+      <BasketIcon />
+
       <ScrollView>
         <View style={tw`relative`}>
           <Image
@@ -80,7 +109,7 @@ const RestaurantScreen = () => {
           </TouchableOpacity>
         </View>
 
-        <View>
+        <View style={tw`pb-36`}>
           <Text style={tw`px-4 pt-6 font-bold text-xl`}>Menu</Text>
 
           {dishes.map((dish) => (

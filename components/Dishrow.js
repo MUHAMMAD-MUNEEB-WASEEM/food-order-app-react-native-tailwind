@@ -52,7 +52,7 @@ export const Dishrow = ({ id, name, description, price, image }) => {
         <View style={tw`bg-white px-4`}>
           <View style={tw`flex-row items-center space-x-2 pb-3`}>
             <TouchableOpacity disabled={!items.length} onPress={removeItemsFromCart}>
-              <MinusCircleIcon color="#00CCBB" size={40} color={items.length > 0 ? "#00CCBB" : "gray"}/>
+              <MinusCircleIcon size={40} color={items.length > 0 ? "#00CCBB" : "gray"}/>
             </TouchableOpacity>
             <Text>{items.length}</Text>
             <TouchableOpacity onPress={addItemToCart}>
